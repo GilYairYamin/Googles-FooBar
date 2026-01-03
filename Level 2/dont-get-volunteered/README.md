@@ -1,6 +1,6 @@
 # Don't Get Volunteered! (Google FooBar Level 2)
 
-## 🚀 The Challenge
+## The Challenge
 
 As a henchman on Commander Lambda’s space station, you’re expected to be resourceful, smart, and a quick thinker. It’s not easy building a doomsday device and ordering the bunnies around at the same time, after all! In order to make sure that everyone is sufficiently quick-witted, Commander Lambda has installed new flooring outside the henchman dormitories.
 

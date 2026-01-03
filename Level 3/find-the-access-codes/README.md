@@ -1,6 +1,6 @@
 # Find the Access Codes (Google FooBar Level 3)
 
-## 🚀 The Challenge
+## The Challenge
 
 In order to destroy Commander Lambda's LAMBCHOP doomsday device, you'll need access to it. But the only door leading to the LAMBCHOP chamber is secured with a unique lock system whose number of passcodes changes daily. Commander Lambda gets a report every day that includes the locks' access codes, but only the Commander knows how to figure out which of several lists contains the access codes. You need to find a way to determine which list contains the access codes once you're ready to go in.
 
@@ -12,7 +12,7 @@ Write a function `solution(l)` that takes a list of positive integers `l` and co
 **Example:**
 `[1, 2, 3, 4, 5, 6]` has the triples: `[1, 2, 4]`, `[1, 2, 6]`, `[1, 3, 6]`, making the solution 3 total.
 
-## 🧪 Test Cases
+## Test Cases
 
 | Input `l`            | Output |
 | :------------------- | :----- |

@@ -1,26 +1,73 @@
-# Dodge the lasers!
+# Dodge the Lasers! (Google FooBar Level 5)
+
+## The Challenge
 
 Oh no! You've managed to escape Commander Lambdas collapsing space station in an escape pod with the rescued bunny prisoners - but Commander Lambda isnt about to let you get away that easily. She's sent her elite fighter pilot squadron after you - and they've opened fire!
 
-Fortunately, you know something important about the ships trying to shoot you down. Back when you were still Commander Lambdas assistant, she asked you to help program the aiming mechanisms for the starfighters. They undergo rigorous testing procedures, but you were still able to slip in a subtle bug. The software works as a time step simulation: if it is tracking a target that is accelerating away at 45 degrees, the software will consider the targets acceleration to be equal to the square root of 2, adding the calculated result to the targets end velocity at each timestep. However, thanks to your bug, instead of storing the result with proper precision, it will be truncated to an integer before adding the new velocity to your current position.  This means that instead of having your correct position, the targeting software will erringly report your position as sum(i=1..n, floor(i*sqrt(2))) - not far enough off to fail Commander Lambdas testing, but enough that it might just save your life.
+Fortunately, you know something important about the ships trying to shoot you down. Back when you were still Commander Lambdas assistant, she asked you to help program the aiming mechanisms for the starfighters. They undergo rigorous testing procedures, but you were still able to slip in a subtle bug. The software works as a time step simulation: if it is tracking a target that is accelerating away at 45 degrees, the software will consider the targets acceleration to be equal to the square root of 2, adding the calculated result to the targets end velocity at each timestep. However, thanks to your bug, instead of storing the result with proper precision, it will be truncated to an integer before adding the new velocity to your current position. This means that instead of having your correct position, the targeting software will erringly report your position as $\sum_{i=1}^{n} \lfloor i\sqrt{2} \rfloor$ - not far enough off to fail Commander Lambdas testing, but enough that it might just save your life.
 
-If you can quickly calculate the target of the starfighters' laser beams to know how far off they'll be, you can trick them into shooting an asteroid, releasing dust, and concealing the rest of your escape.  Write a function answer(str_n) which, given the string representation of an integer n, returns the sum of (floor(1*sqrt(2)) + floor(2*sqrt(2)) + ... + floor(n*sqrt(2))) as a string. That is, for every number i in the range 1 to n, it adds up all of the integer portions of i*sqrt(2).
+If you can quickly calculate the target of the starfighters' laser beams to know how far off they'll be, you can trick them into shooting an asteroid, releasing dust, and concealing the rest of your escape.
 
-For example, if str_n was "5", the answer would be calculated as\
-floor(1*sqrt(2)) +\ 
-floor(2*sqrt(2)) +\ 
-floor(3*sqrt(2)) +\ 
-floor(4*sqrt(2)) +\ 
-floor(5*sqrt(2))\ 
-= 1 + 2 + 4 + 5 + 7 = 19\ 
+**The Goal:**
+Write a function `solution(str_n)` which, given the string representation of an integer $n$, returns the sum of:
+$$\lfloor 1\sqrt{2} \rfloor + \lfloor 2\sqrt{2} \rfloor + \dots + \lfloor n\sqrt{2} \rfloor$$
+as a string. That is, for every number $i$ in the range 1 to $n$, it adds up all of the integer portions of $i\sqrt{2}$.
+
+**Example:**
+If `str_n` was "5", the answer would be calculated as:
+$\lfloor 1\sqrt{2} \rfloor + \lfloor 2\sqrt{2} \rfloor + \lfloor 3\sqrt{2} \rfloor + \lfloor 4\sqrt{2} \rfloor + \lfloor 5\sqrt{2} \rfloor$
+$= 1 + 2 + 4 + 5 + 7 = 19$
 so the function would return "19".
 
-str_n will be a positive integer between 1 and 10^100, inclusive. Since n can be very large (up to 101 digits!), using just sqrt(2) and a loop won't work. Sometimes, it's easier to take a step back and concentrate not on what you have in front of you, but on what you don't.
+**Constraints:**
+`str_n` will be a positive integer between 1 and $10^{100}$, inclusive. Since $n$ can be very large (up to 101 digits!), using just `sqrt(2)` and a loop won't work. Sometimes, it's easier to take a step back and concentrate not on what you have in front of you, but on what you don't.
 
-# Test cases
+## Test Cases
 
-Input: solution(5) \
-Output: 19
+| Input `str_n` | Output   |
+| :------------ | :------- |
+| `"5"`         | `"19"`   |
+| `"77"`        | `"4208"` |
 
-Input: solution(77) \
-Output: 4208
+# Solution Approach
+
+The input $n$ can be as large as $10^{100}$. A simple $O(n)$ iteration is impossible. We need an $O(\log n)$ mathematical shortcut.
+
+### 1. Beatty Sequences & Rayleigh's Theorem
+
+The problem asks for the sum of the **Beatty Sequence** generated by $r = \sqrt{2}$:
+$$S(n, r) = \sum_{i=1}^n \lfloor i \cdot r \rfloor$$
+
+We define a complementary number $s$ such that $\frac{1}{r} + \frac{1}{s} = 1$.
+For $r = \sqrt{2}$, the complementary number is $s = 2 + \sqrt{2}$.
+$$\frac{1}{\sqrt{2}} + \frac{1}{2+\sqrt{2}} = \frac{2+\sqrt{2} + \sqrt{2}}{\sqrt{2}(2+\sqrt{2})} = 1$$
+
+By **Rayleigh's Theorem**, the sequences $\lfloor i \cdot r \rfloor$ and $\lfloor j \cdot s \rfloor$ partition the set of positive integers. This means every integer appears exactly once in one of the two sequences.
+
+### 2. Recursive Reduction
+
+Because the two sequences partition the integers, the sum of terms in the first sequence (up to a certain value $N = \lfloor n\sqrt{2} \rfloor$) plus the sum of terms in the second sequence (up to a bound $m$) must equal the sum of _all_ integers up to $N$.
+
+The sum of integers $1 \dots N$ is the triangular number: $\frac{N(N+1)}{2}$.
+
+We can derive a recursive formula to calculate $S(n, \sqrt{2})$ by subtracting the terms of the complementary sequence. Since $s = 2 + \sqrt{2}$, the complementary sequence term is:
+$$\lfloor j \cdot s \rfloor = \lfloor j(2 + \sqrt{2}) \rfloor = 2j + \lfloor j\sqrt{2} \rfloor$$
+This expresses the "hard" sequence in terms of itself (smaller input) and a simple arithmetic progression ($2j$).
+
+This leads to the final recurrence used in the code:
+$$S(n) = \frac{N(N+1)}{2} - m(m+1) - S(m)$$
+Where:
+
+- $N = \lfloor n\sqrt{2} \rfloor$
+- $m = \lfloor \frac{N}{s} \rfloor$
+
+### 3. Precision Handling (`decimal`)
+
+Standard floating-point types (`float`) only have ~15-17 digits of precision. Since we need to handle inputs up to $10^{100}$, we must use Python's `decimal` module.
+
+- The code sets context precision to 110 digits (`ctx.prec = 110`) to ensure no rounding errors occur during the multiplications for $N$ and $m$.
+
+### Complexity
+
+- **Time Complexity:** $O(\log n)$. The value of $n$ reduces by a factor of roughly $1/(\sqrt{2}-1) \approx 2.41$ in each recursive step.
+- **Space Complexity:** $O(\log n)$ for the recursion stack.

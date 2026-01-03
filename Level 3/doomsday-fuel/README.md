@@ -1,6 +1,6 @@
 # Doomsday Fuel (Google FooBar Level 3)
 
-## 🚀 The Challenge
+## The Challenge
 
 Making fuel for the LAMBCHOP’s reactor core is a tricky process because of the exotic matter involved. It starts as raw ore, then during processing, begins randomly changing between forms, eventually reaching a stable form. There may be multiple stable forms that a sample could ultimately reach, not all of which are useful as fuel.
 
@@ -16,7 +16,7 @@ Write a function `solution(m)` that takes an array of array of non-negative inte
 - The ore starts in state 0.
 - The denominator will fit within a signed 32-bit integer.
 
-## 🧪 Test Cases
+## Test Cases
 
 | Input `m`                                                                                                                  | Output             |
 | :------------------------------------------------------------------------------------------------------------------------- | :----------------- |

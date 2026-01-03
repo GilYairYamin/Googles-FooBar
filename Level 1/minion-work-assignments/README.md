@@ -1,6 +1,6 @@
 # Minion Work Assignments (Google FooBar Level 1)
 
-## 🚀 The Challenge
+## The Challenge
 
 Commander Lambda's minions are upset! They're given the worst jobs on the whole space station, and some of them are starting to complain that even those worst jobs are being allocated unfairly. If you can fix this problem, it'll prove your chops to Commander Lambda so you can get promoted!
 
@@ -14,7 +14,7 @@ Write a function called `solution(data, n)` that takes in a list of less than 10
 **Example:**
 If `data` was `[5, 10, 15, 10, 7]` and `n` was `1`, `solution(data, n)` would return the list `[5, 15, 7]` because `10` occurs twice, and thus was removed from the list entirely.
 
-## 🧪 Test Cases
+## Test Cases
 
 | Input `data`                  | Input `n` | Output      |
 | :---------------------------- | :-------- | :---------- |
@@ -36,5 +36,3 @@ The objective is to filter the input list based on element frequency while prese
 
 - **Time Complexity:** $O(K)$, where $K$ is the number of elements in `data`. The list is traversed exactly twice.
 - **Space Complexity:** $O(K)$ to store the frequency dictionary.
-
-

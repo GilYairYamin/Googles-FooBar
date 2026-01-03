@@ -1,6 +1,6 @@
 # Please Pass the Coded Messages (Google FooBar Level 2)
 
-## 🚀 The Challenge
+## The Challenge
 
 You need to pass a message to the bunny prisoners, but to avoid detection, the code you agreed to use is... obscure, to say the least. The bunnies are given food on standard-issue prison plates that are stamped with the numbers 0-9 for easier sorting, and you need to combine sets of plates to create the numbers in the code. The signal that a number is part of the code is that it is divisible by 3. You can do smaller numbers like 15 and 45 easily, but bigger numbers like 144 and 414 are a little trickier. Write a program to help yourself quickly create large numbers for use in the code, given a limited number of plates to work with.
 
@@ -30,7 +30,7 @@ This solution implements a **Recursive Backtracking** approach to explore the pr
     - This ensures we attempt to build the largest numbers first (greedy preference for higher significant digits).
 3.  **Validation:** The base case checks if the constructed number is divisible by 3 (`curr % 3 == 0`). If valid, it returns the number; otherwise, it returns 0.
 
-### 👨‍💻 Technical Note: Why Java?
+### Technical Note: Why Java?
 
 Unlike the previous solutions which utilized Python for brevity or system control, this solution was intentionally architected in **Java**.
 
@@ -42,7 +42,7 @@ Unlike the previous solutions which utilized Python for brevity or system contro
 - **Time Complexity:** Exponential $O(2^N)$ in the worst case due to the branching recursion, but constrained by the small input size ($N \le 9$).
 - **Space Complexity:** $O(N)$ due to the recursion stack depth.
 
-# 🐍 Alternative Approach (Python): The "Sum of Digits" Trick
+# Alternative Approach (Python): The "Sum of Digits" Trick
 
 While the Java solution uses recursion to explore all combinations, this Python solution utilizes a mathematical property of the number 3 to solve the problem in near-linear time.
 

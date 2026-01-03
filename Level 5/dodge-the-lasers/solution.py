@@ -1,5 +1,6 @@
 from decimal import *
 
+
 def solution(str_n):
     with localcontext() as ctx:
         ctx.prec = 110
@@ -17,3 +18,8 @@ def sum(n, r, s):
     m = int(Decimal(N) / s)
     res = (N * (N + 1)) / 2 - m * (m + 1) - sum(m, r, s)
     return res
+
+
+if __name__ == "__main__":
+    print(solution("5"))
+    print(solution("77"))
