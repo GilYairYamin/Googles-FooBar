@@ -2,23 +2,23 @@ from fractions import Fraction
 
 
 def solution(m):
-    stableCount, swapIndecies = findSwapIndecies(m)
+    stableCount, swapIndecies = findSwapIndices(m)
     m = swapMat(m, swapIndecies)
     addOnes(m, stableCount)
     convertToFraction(m)
 
     matI = createIdentity(len(m) - stableCount)
-    matR = getSubMat(m, stableCount, stableCount, len(
-        m) - stableCount, len(m) - stableCount)
+    matR = getSubMat(
+        m, stableCount, stableCount, len(m) - stableCount, len(m) - stableCount
+    )
     subMat(matI, matR)
     inverseMat(matI)
 
-    matS = getSubMat(m, stableCount, 0, len(m)-stableCount, stableCount)
+    matS = getSubMat(m, stableCount, 0, len(m) - stableCount, stableCount)
     matI = mulMat(matI, matS)
 
     putIn(m, matI, stableCount, 0)
-    clearMat(m, stableCount, stableCount, len(
-        m) - stableCount, len(m) - stableCount)
+    clearMat(m, stableCount, stableCount, len(m) - stableCount, len(m) - stableCount)
 
     vec = createVec(swapIndecies)
     vec = mulVecMat(vec, m)
@@ -93,7 +93,7 @@ def clearMat(m, row, col, height, width):
 def putIn(m, subM, row, col):
     for i in range(len(subM)):
         for j in range(len(subM[0])):
-            m[i+row][j+col] = subM[i][j]
+            m[i + row][j + col] = subM[i][j]
 
 
 def mulMat(m1, m2):
@@ -111,7 +111,7 @@ def createIdentity(size):
 
 
 def getSubMat(m, row, col, height, width):
-    return [[m[i+row][j+col] for j in range(width)] for i in range(height)]
+    return [[m[i + row][j + col] for j in range(width)] for i in range(height)]
 
 
 def subMat(m1, m2):
@@ -165,7 +165,7 @@ def findStable(m):
     return stable
 
 
-def findSwapIndecies(m):
+def findSwapIndices(m):
     stable = findStable(m)
     newOrder = []
     count = 0
@@ -213,4 +213,4 @@ def inverseMat(m):
             subRow(m, j, i, m[j][i])
 
     for i in range(len(m)):
-        m[i] = m[i][len(m):]
+        m[i] = m[i][len(m) :]
